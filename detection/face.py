@@ -1,8 +1,6 @@
 # -----------------------------------------------------------------------------
 # Face Tracking and Evaluation Algorithm
 # -----------------------------------------------------------------------------
-# Author: Daniel Oliveira
-# https://github.com/danielsousaoliveira
 # Updated for mediapipe 0.10.x compatibility
 # -----------------------------------------------------------------------------
 
