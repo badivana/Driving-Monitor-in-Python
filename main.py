@@ -1,10 +1,4 @@
-# -----------------------------------------------------------------------------
-# Main function for the driver's fatigue level estimation algorithm
-# -----------------------------------------------------------------------------
-# Author: Daniel Oliveira
-# https://github.com/danielsousaoliveira
-# Updated for mediapipe 0.10.x compatibility
-# -----------------------------------------------------------------------------
+#Credits: Prajwal Badivana Git: Badivana
 
 import cv2
 from utils import *
