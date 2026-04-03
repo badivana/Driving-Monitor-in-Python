@@ -1,9 +1,7 @@
 # -----------------------------------------------------------------------------
 # Head Posture Estimation Class
 # -----------------------------------------------------------------------------
-# Author: Daniel Oliveira
-# https://github.com/danielsousaoliveira
-# Updated for mediapipe 0.10.x compatibility
+# 
 # -----------------------------------------------------------------------------
 
 import cv2
