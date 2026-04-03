@@ -40,7 +40,7 @@ pip3 install -r requirements.txt
 1. Clone this repository
 
 ```
-git clone https://github.com/danielsousaoliveira/driving-monitor-python.git
+git clone https://github.com/badivana/Driving-Monitor-in-Python.git
 ```
 
 2. Run the main script to start monitoring the driver's state:
