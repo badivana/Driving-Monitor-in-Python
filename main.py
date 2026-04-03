@@ -3,6 +3,7 @@
 # -----------------------------------------------------------------------------
 # Author: Daniel Oliveira
 # https://github.com/danielsousaoliveira
+# Updated for mediapipe 0.10.x compatibility
 # -----------------------------------------------------------------------------
 
 import cv2
@@ -11,21 +12,30 @@ from detection.face import *
 from detection.pose import *
 from state import *
 import mediapipe as mp
+from mediapipe.tasks import python as mp_python
+from mediapipe.tasks.python import vision as mp_vision
 import time
+import urllib.request
+import os
 
 # -----------------------------------------------------------------------------
 # Main Function
 # -----------------------------------------------------------------------------
 
+MODEL_PATH = "face_landmarker.task"
+MODEL_URL = "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task"
+
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        print("Downloading face_landmarker.task model...")
+        urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+        print("Model downloaded.")
+
 def main():
 
-    """ Main function to monitor the driver's state and detect signs of drowsiness.
+    """ Main function to monitor the driver's state and detect signs of drowsiness. """
 
-    This function records video using the provided camera, analyzes the frames to estimate the head pose and facial landmarks, 
-    and then assesses the driver's condition using a variety of facial indicators such eye openness, lip position, and head pose. 
-    An alert is sent if the driver exhibits indicators of sleepiness.
-
-    """
+    download_model()
 
     # Thresholds defined for driver state evaluation
     marThresh = 0.7
@@ -35,30 +45,43 @@ def main():
     blinkThresh = 10
     gazeThresh = 5
 
-    #cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture('/home/daniel/test-dataset/processed_data/training/001_glasses_sleepyCombination.avi')
+    cap = cv2.VideoCapture(0)
 
-    if (cap.isOpened()== False): 
+    if not cap.isOpened():
         print("Error opening video stream or file")
+        return
 
-    faceMesh = mp.solutions.face_mesh.FaceMesh(refine_landmarks=True, min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    # Build FaceLandmarker (new mediapipe API)
+    base_options = mp_python.BaseOptions(model_asset_path=MODEL_PATH)
+    options = mp_vision.FaceLandmarkerOptions(
+        base_options=base_options,
+        output_face_blendshapes=False,
+        output_facial_transformation_matrixes=False,
+        num_faces=1,
+        min_face_detection_confidence=0.5,
+        min_face_presence_confidence=0.5,
+        min_tracking_confidence=0.5
+    )
+    faceLandmarker = mp_vision.FaceLandmarker.create_from_options(options)
 
     captureFps = cap.get(cv2.CAP_PROP_FPS)
+    if captureFps == 0:
+        captureFps = 30  # fallback for webcams that report 0
 
     driverState = DriverState(marThresh, marThresh2, headThresh, earThresh, blinkThresh, gazeThresh)
-    headPose = HeadPose(faceMesh)
-    faceDetector = FaceDetector(faceMesh, captureFps, marThresh, marThresh2, headThresh, earThresh, blinkThresh)
-
+    headPose = HeadPose(faceLandmarker)
+    faceDetector = FaceDetector(faceLandmarker, captureFps, marThresh, marThresh2, headThresh, earThresh, blinkThresh)
 
     startTime = time.time()
     drowsinessCounter = 0
+    lastAlertTime = 0
 
     while cap.isOpened():
         ret, frame = cap.read()
 
         if not ret:
             break
-        
+
         frame, results = headPose.process_image(frame)
         frame = headPose.estimate_pose(frame, results, True)
         roll, pitch, yaw = headPose.calculate_angles()
@@ -70,22 +93,27 @@ def main():
         # Update drowsiness counter if the driver is drowsy
         if state == "Drowsy":
             drowsinessCounter += 1
+        else:
+            if drowsinessCounter > 0:
+                drowsinessCounter -= 1
 
         drowsinessTime = drowsinessCounter / captureFps
         drowsy = drowsinessTime / 60
 
-        # Reset the drowsiness counter after 1 minute (can be updated)
+        # Reset the drowsiness counter after 1 minute
         if time.time() - startTime >= 60:
             drowsinessCounter = 0
             startTime = time.time()
-    
+
         cv2.imshow('Driver State Monitoring', frame)
 
-        # Alert if the driver is showing signs of drowsiness for more than the threshold
+        # Alert every 3 seconds while drowsy, stop when alert clears
         if drowsy > 0.08:
-
-            # This will be sent to the driver's MiBand so that he gets a vibrating alert
-            print("USER IS SHOWING SIGNALS OF DROWSINESS. SENDING ALERT")
+            if time.time() - lastAlertTime >= 1:
+                print("USER IS SHOWING SIGNALS OF DROWSINESS. SENDING ALERT")
+                lastAlertTime = time.time()
+        else:
+            lastAlertTime = 0
 
         if cv2.waitKey(10) & 0xFF == 27:
             break
@@ -95,12 +123,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
