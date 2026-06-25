@@ -1,13 +1,34 @@
-# 🚗 Driver Drowsiness Detection System using Python
+# <h1 align="center">🚗 Driver Drowsiness Detection System</h1>
 
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)
-![MediaPipe](https://img.shields.io/badge/MediaPipe-FaceMesh-orange)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-![Status](https://img.shields.io/badge/Status-Active-success)
+<p align="center">
+Real-time Driver Monitoring System using <b>Python</b>, <b>OpenCV</b> and <b>MediaPipe FaceMesh</b>
+</p>
 
-A real-time **Driver Monitoring System (DMS)** built with **Python**, **OpenCV**, and **MediaPipe FaceMesh** to detect driver drowsiness using facial landmarks. The system continuously analyzes eye closure, mouth movement, and head posture to identify fatigue and alert the driver.
+<p align="center">
+<img src="https://img.shields.io/badge/Python-3.11-blue">
+<img src="https://img.shields.io/badge/OpenCV-Computer%20Vision-green">
+<img src="https://img.shields.io/badge/MediaPipe-FaceMesh-orange">
+<img src="https://img.shields.io/badge/License-MIT-yellow">
+<img src="https://img.shields.io/badge/Status-Active-success">
+</p>
 
+---
+
+## 📸 Project Preview
+
+> Replace `images/banner.png` with your project screenshot.
+
+<p align="center">
+<img src="images/banner.png" width="900">
+</p>
+
+---
+
+# 🎥 Demo
+
+<p align="center">
+<img src="demo/demo.gif" width="800">
+</p>
 
 ---
 
@@ -18,18 +39,23 @@ A real-time **Driver Monitoring System (DMS)** built with **Python**, **OpenCV**
 * Technologies Used
 * Project Workflow
 * Detection Parameters
+* Performance
+* Limitations
 * Project Structure
 * Installation
 * Usage
 * How It Works
+* Libraries
+* Roadmap
 * Future Improvements
+* Contributing
 * License
 
 ---
 
 # 📌 Project Overview
 
-Driver fatigue is one of the leading causes of road accidents worldwide. This project aims to reduce accidents by continuously monitoring the driver's facial features through a webcam.
+Driver fatigue is one of the leading causes of road accidents worldwide. This project provides a **real-time Driver Monitoring System (DMS)** that continuously analyzes the driver's facial landmarks using **MediaPipe FaceMesh**.
 
 The system estimates the driver's alertness using:
 
@@ -38,7 +64,7 @@ The system estimates the driver's alertness using:
 * 😴 Percentage of Eye Closure (PERCLOS)
 * 🧠 Head Pose Estimation
 
-If signs of drowsiness persist beyond predefined thresholds, the system alerts the driver.
+If signs of drowsiness persist beyond predefined thresholds, the system automatically detects the driver's fatigue state and can trigger an alert.
 
 ---
 
@@ -46,13 +72,41 @@ If signs of drowsiness persist beyond predefined thresholds, the system alerts t
 
 * ✅ Real-time webcam monitoring
 * ✅ Face detection using MediaPipe FaceMesh
+* ✅ 468 facial landmark detection
 * ✅ Eye Aspect Ratio (EAR) calculation
 * ✅ Mouth Aspect Ratio (MAR) calculation
-* ✅ Head pose estimation
+* ✅ Percentage of Eye Closure (PERCLOS)
+* ✅ Head Pose estimation
 * ✅ Driver state classification
-* ✅ Drowsiness alert system
 * ✅ Lightweight and fast
 * ✅ Modular Python implementation
+* ✅ Easy to customize thresholds
+
+---
+
+# 📸 Screenshots
+
+## Face Detection
+
+<p align="center">
+<img src="images/face_detection.png" width="700">
+</p>
+
+---
+
+## Facial Landmarks
+
+<p align="center">
+<img src="images/landmarks.png" width="700">
+</p>
+
+---
+
+## Driver Alert
+
+<p align="center">
+<img src="images/alert.png" width="700">
+</p>
 
 ---
 
@@ -68,59 +122,80 @@ If signs of drowsiness persist beyond predefined thresholds, the system alerts t
 # 🧠 Project Workflow
 
 ```text
-           Webcam
-              │
-              ▼
-      Face Detection
-              │
-              ▼
-   MediaPipe FaceMesh
+            Webcam
+               │
+               ▼
+       Face Detection
+               │
+               ▼
+    MediaPipe FaceMesh
       (468 Landmarks)
-              │
-      ┌───────┼────────┐
-      ▼       ▼        ▼
-    EAR      MAR   Head Pose
-      │       │        │
-      └───────┼────────┘
-              ▼
-    Driver State Analysis
-              ▼
-      Drowsiness Alert
+               │
+      ┌────────┼────────┐
+      ▼        ▼        ▼
+    EAR       MAR   Head Pose
+      │        │        │
+      └────────┼────────┘
+               ▼
+      Driver State Analysis
+               ▼
+      Drowsiness Detection
+               ▼
+          Driver Alert
 ```
 
 ---
 
 # 📐 Detection Parameters
 
-### 👁 EAR (Eye Aspect Ratio)
+## 👁 Eye Aspect Ratio (EAR)
 
 Measures eye openness.
 
-Lower EAR values indicate prolonged eye closure, which may suggest drowsiness.
+Lower EAR values indicate prolonged eye closure and possible drowsiness.
 
 ---
 
-### 😮 MAR (Mouth Aspect Ratio)
+## 😮 Mouth Aspect Ratio (MAR)
 
 Measures mouth opening.
 
-High MAR values indicate yawning.
+Higher MAR values indicate yawning.
 
 ---
 
-### 😴 PERCLOS
+## 😴 PERCLOS
 
 Percentage of Eye Closure over time.
 
-One of the most reliable fatigue indicators used in modern Driver Monitoring Systems.
+PERCLOS is one of the most reliable fatigue indicators used in modern Driver Monitoring Systems.
 
 ---
 
-### 🧠 Head Pose
+## 🧠 Head Pose Estimation
 
 Tracks the driver's head orientation.
 
-Detects excessive downward or sideways head movement that may indicate fatigue or distraction.
+Detects excessive downward or sideways head movement indicating fatigue or distraction.
+
+---
+
+# 📊 Performance
+
+* Real-time Processing
+* Approximately **25–30 FPS**
+* Detects **468 facial landmarks**
+* Low latency
+* Lightweight implementation
+
+---
+
+# ⚠️ Limitations
+
+* Works with one driver at a time
+* Requires sufficient lighting
+* Performance decreases if the face is heavily occluded
+* Requires a webcam
 
 ---
 
@@ -133,11 +208,16 @@ Driving-Monitor-in-Python/
 ├── detection/
 ├── demo/
 │   └── demo.gif
+├── images/
+│   ├── banner.png
+│   ├── face_detection.png
+│   ├── landmarks.png
+│   └── alert.png
 ├── main.py
 ├── state.py
 ├── utils.py
-├── requirements.txt
 ├── face_landmarker.task
+├── requirements.txt
 ├── LICENSE
 └── README.md
 ```
@@ -174,10 +254,11 @@ The application will:
 
 * Open your webcam
 * Detect facial landmarks
-* Monitor eye closure
-* Detect yawning
-* Estimate head pose
-* Alert the driver when drowsiness is detected
+* Calculate Eye Aspect Ratio (EAR)
+* Calculate Mouth Aspect Ratio (MAR)
+* Estimate Head Pose
+* Monitor driver fatigue
+* Display alerts when drowsiness is detected
 
 Press **Esc** to exit.
 
@@ -185,7 +266,7 @@ Press **Esc** to exit.
 
 # ⚙️ How It Works
 
-The system consists of three major components.
+The Driver Monitoring System consists of three major components.
 
 ## Face Detection
 
@@ -195,11 +276,11 @@ Uses **MediaPipe FaceMesh** to detect **468 facial landmarks** in real time.
 
 ## Head Pose Estimation
 
-Estimates the orientation of the driver's head to identify distraction or fatigue.
+Calculates the driver's head orientation using facial landmarks.
 
 ---
 
-## Driver State Classifier
+## Driver State Classification
 
 Combines:
 
@@ -210,8 +291,9 @@ Combines:
 
 to classify the driver as:
 
-* 🟢 Alert
-* 🔴 Drowsy
+🟢 Alert
+
+🔴 Drowsy
 
 ---
 
@@ -223,17 +305,34 @@ to classify the driver as:
 
 ---
 
+# 🗺 Roadmap
+
+* [x] Face Detection
+* [x] Eye Aspect Ratio (EAR)
+* [x] Mouth Aspect Ratio (MAR)
+* [x] Head Pose Estimation
+* [x] Driver State Classification
+* [x] Drowsiness Detection
+* [ ] Audio Alarm
+* [ ] Mobile Notifications
+* [ ] Raspberry Pi Deployment
+* [ ] TensorFlow Lite Optimization
+* [ ] Multi-person Detection
+* [ ] Streamlit Dashboard
+
+---
+
 # 🚀 Future Improvements
 
-* Audio alarm
-* Mobile notifications
+* Audio warning system
+* Mobile notification support
 * TensorFlow Lite optimization
 * Raspberry Pi deployment
 * Infrared camera support
 * Driver identification
 * Performance benchmarking
-* Multi-person detection
-* Streamlit dashboard
+* Cloud logging
+* AI-based fatigue prediction
 
 ---
 
@@ -241,10 +340,21 @@ to classify the driver as:
 
 Contributions are welcome.
 
-Feel free to fork the repository, open issues, or submit pull requests.
+If you find a bug or have an improvement, feel free to:
+
+* Fork the repository
+* Create a new branch
+* Commit your changes
+* Open a Pull Request
 
 ---
 
 # 📄 License
 
-This project is licensed under the MIT License. 
+This project is licensed under the **MIT License**.
+
+---
+
+# ⭐ If you found this project useful
+
+Please consider giving the repository a ⭐ on GitHub.
