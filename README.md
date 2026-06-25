@@ -1,75 +1,257 @@
-### Driving Monitor in Python
+# 🚗 Driver Drowsiness Detection System using Python
 
-Lightweight Python algorithm to automatically evaluate the fatigue level of any driver.
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-FaceMesh-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-**Real time security system to implement on a vehicle**
+A real-time **Driver Monitoring System (DMS)** built with **Python**, **OpenCV**, and **MediaPipe FaceMesh** to detect driver drowsiness using facial landmarks. The system continuously analyzes eye closure, mouth movement, and head posture to identify fatigue and alert the driver.
 
-Based on [Mediapipe's Facemesh](https://github.com/google/mediapipe/blob/master/docs/solutions/face_mesh.md), it tracks the driver's face and collects the most important face landmarks for the fatigue level estimation purpose. The system relies on the percentage of eye closure (PERCLOS), the mouth aspect ratio (MAR) and the head pose.
+---
 
-![Demonstration](demo/demo.gif)
+## 🎥 Demo
 
-## Table of Contents
+> Add your demo GIF inside the `demo/` folder.
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [How to use](#how-to-use)
-- [How It Works](#how-it-works)
-- [Libraries](#libraries)
-- [To Do](#todo)
+![Demo](demo/demo.gif)
 
-## Features
+---
 
-(This work is still not finished. Currently working on fine tuning the detection thresholds for multiple users)
+# 📑 Table of Contents
 
-- Real-time monitoring of driver's state
-- Facial landmark detection for eye and mouth analysis
-- Head pose estimation to assess head orientation
-- Alerts for drowsy drivers
-- Easy-to-use and customizable parameters for tuning the detection thresholds
+* Project Overview
+* Features
+* Technologies Used
+* Project Workflow
+* Detection Parameters
+* Project Structure
+* Installation
+* Usage
+* How It Works
+* Future Improvements
+* License
 
-## Requirements
+---
 
-1. Install dependencies:
+# 📌 Project Overview
 
+Driver fatigue is one of the leading causes of road accidents worldwide. This project aims to reduce accidents by continuously monitoring the driver's facial features through a webcam.
+
+The system estimates the driver's alertness using:
+
+* 👁 Eye Aspect Ratio (EAR)
+* 😮 Mouth Aspect Ratio (MAR)
+* 😴 Percentage of Eye Closure (PERCLOS)
+* 🧠 Head Pose Estimation
+
+If signs of drowsiness persist beyond predefined thresholds, the system alerts the driver.
+
+---
+
+# ✨ Features
+
+* ✅ Real-time webcam monitoring
+* ✅ Face detection using MediaPipe FaceMesh
+* ✅ Eye Aspect Ratio (EAR) calculation
+* ✅ Mouth Aspect Ratio (MAR) calculation
+* ✅ Head pose estimation
+* ✅ Driver state classification
+* ✅ Drowsiness alert system
+* ✅ Lightweight and fast
+* ✅ Modular Python implementation
+
+---
+
+# 🛠 Technologies Used
+
+* Python
+* OpenCV
+* MediaPipe FaceMesh
+* NumPy
+
+---
+
+# 🧠 Project Workflow
+
+```text
+           Webcam
+              │
+              ▼
+      Face Detection
+              │
+              ▼
+   MediaPipe FaceMesh
+      (468 Landmarks)
+              │
+      ┌───────┼────────┐
+      ▼       ▼        ▼
+    EAR      MAR   Head Pose
+      │       │        │
+      └───────┼────────┘
+              ▼
+    Driver State Analysis
+              ▼
+      Drowsiness Alert
 ```
-pip3 install -r requirements.txt
+
+---
+
+# 📐 Detection Parameters
+
+### 👁 EAR (Eye Aspect Ratio)
+
+Measures eye openness.
+
+Lower EAR values indicate prolonged eye closure, which may suggest drowsiness.
+
+---
+
+### 😮 MAR (Mouth Aspect Ratio)
+
+Measures mouth opening.
+
+High MAR values indicate yawning.
+
+---
+
+### 😴 PERCLOS
+
+Percentage of Eye Closure over time.
+
+One of the most reliable fatigue indicators used in modern Driver Monitoring Systems.
+
+---
+
+### 🧠 Head Pose
+
+Tracks the driver's head orientation.
+
+Detects excessive downward or sideways head movement that may indicate fatigue or distraction.
+
+---
+
+# 📁 Project Structure
+
+```text
+Driving-Monitor-in-Python/
+│
+├── calibration/
+├── detection/
+├── demo/
+│   └── demo.gif
+├── main.py
+├── state.py
+├── utils.py
+├── requirements.txt
+├── face_landmarker.task
+├── LICENSE
+└── README.md
 ```
 
-## How to use
+---
 
-1. Clone this repository
+# 🚀 Installation
 
-```
+## Clone the repository
+
+```bash
 git clone https://github.com/badivana/Driving-Monitor-in-Python.git
+
+cd Driving-Monitor-in-Python
 ```
 
-2. Run the main script to start monitoring the driver's state:
+## Install dependencies
 
+```bash
+pip install -r requirements.txt
 ```
-python3 main.py
+
+---
+
+# ▶️ Usage
+
+Run the application
+
+```bash
+python main.py
 ```
 
-3. The system will use your default computer webcam to capture video and analyze facial features.
+The application will:
 
-4. Press the 'Esc' key to exit the program.
+* Open your webcam
+* Detect facial landmarks
+* Monitor eye closure
+* Detect yawning
+* Estimate head pose
+* Alert the driver when drowsiness is detected
 
-## How It Works
+Press **Esc** to exit.
 
-The Driver Drowsiness Detection System uses the following components:
+---
 
-- **Head Posture**: This class estimates the driver's head pose using the MediaPipe FaceMesh module.
+# ⚙️ How It Works
 
-- **Face Detection**: This class evaluates the driver's facial features, such as eye openness, mouth state, and gaze, to detect signs of drowsiness.
+The system consists of three major components.
 
-- **Driver State Classifier**: This class combines the head pose and facial feature analysis to determine the driver's overall state, i.e., whether the driver is drowsy or alert.
+## Face Detection
 
-## Libraries
+Uses **MediaPipe FaceMesh** to detect **468 facial landmarks** in real time.
 
-- [opencv-python](https://github.com/opencv/opencv-python)
-- [mediapipe](https://github.com/google/mediapipe)
+---
 
-## TODO
+## Head Pose Estimation
 
-1. Fine tune detection thresholds
-2. Increase robustness to deal with all mundane driving situations
-3. Add miband implementation for alerts
+Estimates the orientation of the driver's head to identify distraction or fatigue.
+
+---
+
+## Driver State Classifier
+
+Combines:
+
+* Eye Aspect Ratio (EAR)
+* Mouth Aspect Ratio (MAR)
+* PERCLOS
+* Head Pose
+
+to classify the driver as:
+
+* 🟢 Alert
+* 🔴 Drowsy
+
+---
+
+# 📚 Libraries
+
+* OpenCV
+* MediaPipe
+* NumPy
+
+---
+
+# 🚀 Future Improvements
+
+* Audio alarm
+* Mobile notifications
+* TensorFlow Lite optimization
+* Raspberry Pi deployment
+* Infrared camera support
+* Driver identification
+* Performance benchmarking
+* Multi-person detection
+* Streamlit dashboard
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+Feel free to fork the repository, open issues, or submit pull requests.
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
