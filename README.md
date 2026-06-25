@@ -8,13 +8,6 @@
 
 A real-time **Driver Monitoring System (DMS)** built with **Python**, **OpenCV**, and **MediaPipe FaceMesh** to detect driver drowsiness using facial landmarks. The system continuously analyzes eye closure, mouth movement, and head posture to identify fatigue and alert the driver.
 
----
-
-## 🎥 Demo
-
-> Add your demo GIF inside the `demo/` folder.
-
-![Demo](demo/demo.gif)
 
 ---
 
