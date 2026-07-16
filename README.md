@@ -68,31 +68,7 @@ If signs of drowsiness persist beyond predefined thresholds, the system automati
 
 ---
 
-# 📸 Screenshots
 
-## Face Detection
-
-<p align="center">
-<img src="images/face_detection.png" width="700">
-</p>
-
----
-
-## Facial Landmarks
-
-<p align="center">
-<img src="images/landmarks.png" width="700">
-</p>
-
----
-
-## Driver Alert
-
-<p align="center">
-<img src="images/alert.png" width="700">
-</p>
-
----
 
 # 🛠 Technologies Used
 
