@@ -12,23 +12,7 @@ Real-time Driver Monitoring System using <b>Python</b>, <b>OpenCV</b> and <b>Med
 <img src="https://img.shields.io/badge/Status-Active-success">
 </p>
 
----
 
-## 📸 Project Preview
-
-> Replace `images/banner.png` with your project screenshot.
-
-<p align="center">
-<img src="images/banner.png" width="900">
-</p>
-
----
-
-# 🎥 Demo
-
-<p align="center">
-<img src="demo/demo.gif" width="800">
-</p>
 
 ---
 
