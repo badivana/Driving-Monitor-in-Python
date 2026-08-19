@@ -317,4 +317,4 @@ This project is licensed under the **MIT License**.
 
 # ⭐ If you found this project useful
 
-Please consider giving the repository a ⭐ on GitHub.
+Please consider giving the repository a ⭐ on GitHub
